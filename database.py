@@ -2,7 +2,7 @@ import pymysql as PyMySQL
 
 
 def open_connection():
-    db = PyMySQL.connect("localhost", "root", "mysql", "edubot")
+    db = PyMySQL.connect("localhost", "root", "", "edubot")
     return db
 
 
@@ -29,7 +29,7 @@ def insert_into_note_list():
     db = open_connection()
     cursor = db.cursor()
     id = getID(db, cursor)
-    sql = "INSERT INTO noteshistory (id, title, note_text, time, status) VALUES (" + str(
+    sql = "INSERT INTO noteshistory (id, title, text, time, status) VALUES (" + str(
         id) + ",'artificial intelligence','assignment is due','4:5:6','pending')"
     try:
         cursor.execute(sql)
@@ -47,6 +47,10 @@ def select_all_notes():
         cursor.execute(sql)
         result = cursor.fetchall()
         print(result)
+        print("\n")
+        d = dict()
+        keys=['id','title','text','time','status']
+        print([dict(zip(keys, row)) for row in result])
         db.commit()
     except:
         db.rollback()
@@ -67,10 +71,14 @@ def select_note(db, cursor, id):
 def update_record(id, new_text):
     db = open_connection()
     cursor = db.cursor()
-    sql = "UPDATE noteshistory SET note_text='" + new_text + "' WHERE id=" + str(id)
+    sql = "UPDATE noteshistory SET text='" + new_text + "' WHERE id=" + str(id)
     try:
         cursor.execute(sql)
         db.commit()
     except:
         db.rollback()
     close_connection(db)
+
+
+if __name__ == "__main__":
+    select_all_notes()
