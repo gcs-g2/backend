@@ -7,11 +7,11 @@ def open_connection():
 
 
 def close_connection(db):
-    var = db.close
-    print("connection closed")
+    db.close()
+    print("db connection closed")
 
 
-def getID():
+def getID(db, cursor):
     num = 0
     sql = "SELECT max(id) FROM noteshistory"
     id = 0
@@ -25,8 +25,10 @@ def getID():
     return id
 
 
-def insert_into_note_list(db, cursor):
-    id = getID()
+def insert_into_note_list():
+    db = open_connection()
+    cursor = db.cursor()
+    id = getID(db, cursor)
     sql = "INSERT INTO noteshistory (id, title, note_text, time, status) VALUES (" + str(
         id) + ",'artificial intelligence','assignment is due','4:5:6','pending')"
     try:
@@ -34,9 +36,12 @@ def insert_into_note_list(db, cursor):
         db.commit()
     except:
         db.rollback()
+    close_connection(db)
 
 
-def select_all_notes(db, cursor):
+def select_all_notes():
+    db = open_connection()
+    cursor = db.cursor()
     sql = "SELECT * FROM noteshistory"
     try:
         cursor.execute(sql)
@@ -45,21 +50,16 @@ def select_all_notes(db, cursor):
         db.commit()
     except:
         db.rollback()
+    close_connection(db)
 
 
 def update_record(id, new_text):
+    db = open_connection()
+    cursor = db.cursor()
     sql = "UPDATE noteshistory SET note_text='" + new_text + "' WHERE id=" + str(id)
     try:
         cursor.execute(sql)
         db.commit()
     except:
         db.rollback()
-
-
-if __name__ == "__main__":
-    db = open_connection()
-    cursor = db.cursor()
-    # insert_into_note_list(db, cursor)
-    # select_all_notes(db, cursor)
-    update_record(2, "Jaanu is cute")
     close_connection(db)
