@@ -2,7 +2,7 @@ import pymysql as PyMySQL
 
 
 def open_connection():
-    db = PyMySQL.connect("localhost", "root", "", "edubot")
+    db = PyMySQL.connect("localhost", "root", "mysql", "edubot")
     return db
 
 
