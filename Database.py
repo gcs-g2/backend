@@ -1,4 +1,5 @@
 import pymysql as PyMySQL
+import jsonpickle as JsonPickle
 
 def open_connection():
     db = PyMySQL.connect("localhost", "root", "", "edubot")
@@ -34,5 +35,21 @@ def insert_into_note_list():
         db.rollback()
     close_connection(db)
 
+def select_all_notes():
+    db = open_connection()
+    cursor = db.cursor()
+    sql = "select * from noteshistory"
+    try:
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        print(result)
+        print("\n")
+        print(JsonPickle.encode(result))
+        db.commit()
+    except:
+        db.rollback()
+    close_connection(db)
+
 if __name__ == "__main__":
     insert_into_note_list()
+    select_all_notes()
