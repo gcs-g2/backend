@@ -17,6 +17,7 @@ def get_all_notes():
 
 
 def update_note(data):
+    update_record(data['id'], data['title'], data['text'])
     return data
 
 

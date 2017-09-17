@@ -52,7 +52,7 @@ def handle_note_create():
     return jsonpickle.encode(create_note(data))
 
 
-@app.route('/note/<note_id>', methods=['PUT'])
+@app.route('/notes/<note_id>', methods=['PUT'])
 def handle_note_update(note_id):
     data = jsonpickle.decode(request.data)
     return jsonpickle.encode(update_note(data))

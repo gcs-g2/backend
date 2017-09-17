@@ -42,7 +42,7 @@ def insert_into_note_list(title, body, date, status):
 def select_all_notes():
     db = open_connection()
     cursor = db.cursor()
-    sql = "SELECT * FROM noteshistory"
+    sql = "SELECT * FROM noteshistory ORDER BY id DESC"
     try:
         cursor.execute(sql)
         result = cursor.fetchall()
@@ -72,10 +72,10 @@ def select_note(db, cursor, id):
         db.rollback()
 
 
-def update_record(id, new_text):
+def update_record(id, title, text):
     db = open_connection()
     cursor = db.cursor()
-    sql = "UPDATE noteshistory SET text='" + new_text + "' WHERE id=" + str(id)
+    sql = "UPDATE noteshistory SET title='" + title + "', text='" + text + "' WHERE id=" + str(id)
     try:
         cursor.execute(sql)
         db.commit()
