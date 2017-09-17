@@ -53,6 +53,17 @@ def select_all_notes():
     close_connection(db)
 
 
+def select_note(db, cursor, id):
+    sql = "SELECT * FROM noteshistory WHERE id=" + str(id)
+    try:
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        print(result)
+        db.commit()
+    except:
+        db.rollback()
+
+
 def update_record(id, new_text):
     db = open_connection()
     cursor = db.cursor()
