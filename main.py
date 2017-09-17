@@ -46,14 +46,16 @@ def get_single_note(note_id):
     return jsonpickle.encode(get_note(note_id))
 
 
-@app.route('/note', methods=['POST', 'PUT'])
-def handle_note_update_or_create():
+@app.route('/note', methods=['POST'])
+def handle_note_create():
     data = jsonpickle.decode(request.data)
+    return jsonpickle.encode(create_note(data))
 
-    if data['id']:
-        return jsonpickle.encode(update_note(data))
-    else:
-        return jsonpickle.encode(create_note(data))
+
+@app.route('/note/<note_id>', methods=['PUT'])
+def handle_note_update(note_id):
+    data = jsonpickle.decode(request.data)
+    return jsonpickle.encode(update_note(data))
 
 
 if __name__ == "__main__":
