@@ -34,9 +34,8 @@ def get_all_notes():
     ]
 
 def update_note(data):
-    print('inside data')
-    print(data)
     return data
+
 
 def create_note(data):
     return data

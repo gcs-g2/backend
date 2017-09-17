@@ -2,6 +2,7 @@ from flask import Flask
 from flask import jsonify
 from flask import request
 import json
+import jsonpickle
 
 from chat import *
 from notes import *
@@ -25,7 +26,7 @@ def handle_chat():
 
 @app.route('/notes')
 def return_all_notes():
-    return jsonify(get_all_notes())
+    return jsonpickle.encode(get_all_notes())
 
 @app.route('/note/<note_id>')
 def get_single_note(note_id):
