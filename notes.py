@@ -1,3 +1,6 @@
+from reminder_scheduler import *
+
+
 def get_note(note_id):
     return {
         "id": note_id,
@@ -33,9 +36,11 @@ def get_all_notes():
         }
     ]
 
+
 def update_note(data):
     return data
 
 
 def create_note(data):
+    schedule_reminders(0, data['date'])
     return data
