@@ -64,6 +64,9 @@ def select_note(db, cursor, id):
         cursor.execute(sql)
         result = cursor.fetchall()
         print(result)
+        d = dict()
+        keys = ['id', 'title', 'text', 'time', 'status']
+        print([dict(zip(keys, row)) for row in result])
         db.commit()
     except:
         db.rollback()
