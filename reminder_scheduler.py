@@ -3,6 +3,7 @@ import time
 import datetime
 
 from mail_sender import *
+from sms_sender import *
 
 scheduler = BackgroundScheduler()
 
@@ -15,6 +16,7 @@ def schedule_reminders(note_id, date):
     difference = due_timestamp - time.time()
     if difference < 86400:
         send_email(note_id)
+        send_message('Hey, you have an assignment due today. Mind completing it?')
     elif difference < 604800:
         scheduler.add_job(send_email, 'interval', seconds=10,
                           next_run_time=datetime.datetime.fromtimestamp(time.time() + 10), args=[note_id])
