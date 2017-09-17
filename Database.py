@@ -47,6 +47,17 @@ def select_all_notes(db, cursor):
         db.rollback()
 
 
+def select_note(db, cursor, id):
+    sql = "SELECT * FROM noteshistory WHERE id=" + str(id)
+    try:
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        print(result)
+        db.commit()
+    except:
+        db.rollback()
+
+
 def update_record(id, new_text):
     sql = "UPDATE noteshistory SET note_text='" + new_text + "' WHERE id=" + str(id)
     try:
@@ -61,5 +72,5 @@ if __name__ == "__main__":
     cursor = db.cursor()
     # insert_into_note_list(db, cursor)
     # select_all_notes(db, cursor)
-    update_record(2, "Jaanu is cute")
+    update_record(2, "assignment done")
     close_connection(db)
