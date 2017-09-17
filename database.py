@@ -58,7 +58,9 @@ def select_all_notes():
     close_connection(db)
 
 
-def select_note(db, cursor, id):
+def select_note(id):
+    db = open_connection()
+    cursor = db.cursor()
     sql = "SELECT * FROM noteshistory WHERE id=" + str(id)
     try:
         cursor.execute(sql)
@@ -70,6 +72,7 @@ def select_note(db, cursor, id):
         db.commit()
     except:
         db.rollback()
+    close_connection(db)
 
 
 def update_record(id, title, text):
