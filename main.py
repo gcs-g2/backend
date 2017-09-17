@@ -1,9 +1,9 @@
+# External packages
 from flask import Flask
-from flask import jsonify
 from flask import request
-import json
 import jsonpickle
 
+# Importing files
 from chat import *
 from notes import *
 
@@ -16,13 +16,13 @@ def handle_default():
 @app.route('/chat', methods=['GET', 'POST', 'PUT'])
 def handle_chat():
     if request.method == 'GET':
-        return jsonify(get_chat())
+        return jsonpickle.encode(get_chat())
 
     if request.method == 'POST':
-        return jsonify(save_chat())
+        return jsonpickle.encode(save_chat())
 
     if request.method == 'PUT':
-        return jsonify(save_chat())
+        return jsonpickle.encode(save_chat())
 
 @app.route('/notes')
 def return_all_notes():
@@ -30,16 +30,16 @@ def return_all_notes():
 
 @app.route('/note/<note_id>')
 def get_single_note(note_id):
-    return jsonify(get_note(note_id))
+    return jsonpickle.encode(get_note(note_id))
 
 @app.route('/note', methods=['POST', 'PUT'])
 def handle_note_update_or_create():
-    data = json.loads(request.data)
+    data = jsonpickle.decode(request.data)
 
     if data['id']:
-        return jsonify(update_note(data))
+        return jsonpickle.encode(update_note(data))
     else:
-        return jsonify(create_note(data))
+        return jsonpickle.encode(create_note(data))
 
 
 if __name__ == "__main__":
